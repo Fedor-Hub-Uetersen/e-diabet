@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="uk" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Презентація — Щоденник Діабетика | Diabetes Diary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        @keyframes pulse-logo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .animate-logo {
+            animation: pulse-logo 2.5s infinite ease-in-out;
+        }
+        .slider-container {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Шапка -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50 transition-colors dark:bg-slate-800 dark:border-slate-700 bg-white border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-emerald-700 rounded-xl flex items-center justify-center font-bold text-white text-xl shadow">
+                    D
+                </div>
+                <span class="text-xl font-black text-slate-900 dark:text-white tracking-wide">Diabetes Diary</span>
+            </div>
+            
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <!-- Переключатель языка (UA / EN / RU) -->
+                <div class="flex bg-slate-200 dark:bg-slate-700 rounded-xl p-1 text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <button onclick="setLanguage('ua')" id="lang-ua" class="px-2.5 py-1 rounded-lg transition bg-emerald-700 text-white">UA</button>
+                    <button onclick="setLanguage('en')" id="lang-en" class="px-2.5 py-1 rounded-lg transition">EN</button>
+                    <button onclick="setLanguage('ru')" id="lang-ru" class="px-2.5 py-1 rounded-lg transition">RU</button>
+                </div>
+
+                <!-- Переключатель темы -->
+                <button onclick="toggleTheme()" id="themeBtn" class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white px-3 py-1.5 rounded-xl text-sm font-bold transition flex items-center gap-1.5">
+                    <span id="themeIcon">🌙</span>
+                </button>
+
+                <!-- Ссылка в шапке на наш дневник -->
+                <a href="https://diabet-diary.chebur.shop" target="_blank" class="bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3.5 py-1.5 rounded-xl text-xs sm:text-sm transition shadow flex items-center gap-1.5">
+                    <span data-i18n="openDiary">Відкрити Щоденник</span>
+                    <span>↗</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный баннер -->
+    <main class="mb-auto">
+        <section class="max-w-5xl mx-auto px-4 py-12 text-center space-y-6">
+            <div class="inline-block p-4 bg-emerald-900/20 dark:bg-emerald-900/40 border border-emerald-600/30 rounded-3xl animate-logo">
+                <svg width="80" height="80" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="mx-auto">
+                    <rect width="100" height="100" rx="20" fill="#047857"/>
+                    <text x="50" y="70" font-size="55" font-weight="bold" fill="#ffffff" text-anchor="middle" font-family="Arial">D</text>
+                </svg>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight">
+                <span data-i18n="mainTitle">Розумний щоденник самоконтролю</span> <br>
+                <span class="text-emerald-600 dark:text-emerald-400" data-i18n="mainSubtitle">з штучним інтелектом</span>
+            </h1>
+            <p class="text-base md:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-medium" data-i18n="mainDesc">
+                Повний спектр послуг для зручного обліку цукру, інсуліну, ХО та легкої взаємодії з вашим лікуючим лікарем.
+            </p>
+            <div class="pt-2">
+                <a href="https://diabet-diary.chebur.shop" target="_blank" class="inline-block bg-emerald-700 hover:bg-emerald-600 text-white font-black text-base px-6 py-3.5 rounded-2xl transition shadow-lg hover:shadow-emerald-900/30" data-i18n="mainBtn">
+                    Перейти до додатку ➔
+                </a>
+            </div>
+        </section>
+
+        <!-- Слайдер услуг -->
+        <section id="services" class="max-w-5xl mx-auto px-4 py-8">
+            <h2 class="text-xl md:text-2xl font-black text-center text-emerald-600 dark:text-emerald-400 mb-8 uppercase tracking-wider" data-i18n="servicesTitle">
+                Перелік наданих послуг
+            </h2>
+
+            <!-- Контейнер слайдера -->
+            <div class="relative overflow-hidden p-2">
+                <div id="slider" class="slider-container flex gap-6">
+                    
+                    <!-- 1. ИИ Анализ фото -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">📸</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s1_title">ШІ-розрахунок ХО по фото</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s1_desc">
+                                Завантажте фото страви — вбудований модуль на базі Gemini визначить склад їжі, розрахує вуглеводи та автоматично занесе ХО у ваш щоденник.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 2. Графики и аналитика -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">📈</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s2_title">Графіки та розрахунок HbA1c</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s2_desc">
+                                Наочний інтерактивний графік коливань рівня глюкози та автоматичний розрахунок прогнозованого глікованого гемоглобіну (HbA1c) за 90 днів.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3. Ссылка для врача -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">🩺</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s3_title">Лікарський портал (Doctor Link)</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s3_desc">
+                                Генерація захищеного персонального посилання для вашого лікаря, щоб він міг віддалено переглядати графіки без входу у ваш акаунт.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 4. Калькулятор ХЕ -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">🧮</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s4_title">Калькулятор Хлібних Одиниць</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s4_desc">
+                                Зручний вбудований калькулятор (1 ХО = 12г вуглеводів) для точного розрахунку будь-якої порції їжі за грамами та вмістом вуглеводів.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 5. Поддержка единиц -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">🔄</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s5_title">Підтримка mmol/L та mg/dL</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s5_desc">
+                                Миттєве перемикання одиниць вимірювання глюкози в один клік з автоматичним перерахунком усіх збережених записів та графіків.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 6. Печать и PDF экспорт -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">🖨️</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s6_title">Експорт та друк у PDF</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s6_desc">
+                                Формування готового звіту самоконтролю за будь-який період для збереження у форматі PDF або роздруківки перед візитом до лікаря.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 7. Генератор QR-кодов -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">🔲</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s7_title">Генератор QR-кодів</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s7_desc">
+                                Швидке створення та завантаження PNG QR-коду вашого лікарського посилання або профілю для сканування зі смартфона.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 8. Справочник продуктов -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">🍽️</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s8_title">Каталог продуктів та Преміум</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s8_desc">
+                                Поповнювана база даних продуктів із підрахунком ХО на 100 грамів, інтеграція із зовнішніми сервісами калорійності.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 9. PWA и Мобильная адаптивность -->
+                    <div class="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-6 rounded-2xl shadow-lg hover:border-emerald-500 transition flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4">📱</div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2" data-i18n="s9_title">PWA та Темна тема</h3>
+                            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed" data-i18n="s9_desc">
+                                Можливість встановлення веб-додатка на головний екран смартфона (Progressive Web App), робота офлайн та підтримка темної теми.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Кнопки управления слайдером -->
+            <div class="flex justify-center items-center gap-4 mt-6">
+                <button onclick="prevSlide()" class="bg-slate-800 dark:bg-slate-700 hover:bg-emerald-700 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold transition shadow">
+                    ❮
+                </button>
+                <div id="sliderDots" class="flex gap-2"></div>
+                <button onclick="nextSlide()" class="bg-slate-800 dark:bg-slate-700 hover:bg-emerald-700 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold transition shadow">
+                    ❯
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал с фирменной подписью -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 mt-12 py-6 text-center text-xs sm:text-sm text-slate-500 dark:text-slate-400 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-700 dark:text-slate-300">Diabetes Diary &copy; 2026</p>
+            <p data-i18n="footerDesc">Приватний проект для зручного щоденного самоконтролю при діабеті.</p>
+            <div class="pt-2 text-slate-400 dark:text-slate-500 font-mono text-xs">
+                <a href="https://tech.chebur.shop" target="_blank" class="hover:text-emerald-500 transition inline-flex items-center gap-1">
+                    ™ tech.chebur.shop Solution
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Скрипты перевода, темы и слайдера -->
+    <script>
+        const translations = {
+            ua: {
+                openDiary: "Відкрити Щоденник",
+                mainTitle: "Розумний щоденник самоконтролю",
+                mainSubtitle: "з штучним інтелектом",
+                mainDesc: "Повний спектр послуг для зручного обліку цукру, інсуліну, ХО та легкої взаємодії з вашим лікуючим лікарем.",
+                mainBtn: "Перейти до додатку ➔",
+                servicesTitle: "Перелік наданих послуг",
+                s1_title: "ШІ-розрахунок ХО по фото",
+                s1_desc: "Завантажте фото страви — вбудований модуль на базі Gemini визначить склад їжі, розрахує вуглеводи та автоматично занесе ХО у ваш щоденник.",
+                s2_title: "Графіки та розрахунок HbA1c",
+                s2_desc: "Наочний інтерактивний графік коливань рівня глюкози та автоматичний розрахунок прогнозованого глікованого гемоглобіну (HbA1c) за 90 днів.",
+                s3_title: "Лікарський портал (Doctor Link)",
+                s3_desc: "Генерація захищеного персонального посилання для вашого лікаря, щоб він міг віддалено переглядати графіки без входу у ваш акаунт.",
+                s4_title: "Калькулятор Хлібних Одиниць",
+                s4_desc: "Зручний вбудований калькулятор (1 ХО = 12г вуглеводів) для точного розрахунку будь-якої порції їжі за грамами та вмістом вуглеводів.",
+                s5_title: "Підтримка mmol/L та mg/dL",
+                s5_desc: "Миттєве перемикання одиниць вимірювання глюкози в один клік з автоматичним перерахунком усіх збережених записів та графіків.",
+                s6_title: "Експорт та друк у PDF",
+                s6_desc: "Формування готового звіту самоконтролю за будь-який період для збереження у форматі PDF або роздруківки перед візитом до лікаря.",
+                s7_title: "Генератор QR-кодів",
+                s7_desc: "Швидке створення та завантаження PNG QR-коду вашого лікарського посилання або профілю для сканування зі смартфона.",
+                s8_title: "Каталог продуктів та Преміум",
+                s8_desc: "Поповнювана база даних продуктів із підрахунком ХО на 100 грамів, інтеграція із зовнішніми сервісами калорійності.",
+                s9_title: "PWA та Темна тема",
+                s9_desc: "Можливість встановлення веб-додатка на головний екран смартфона (Progressive Web App), робота офлайн та підтримка темної теми.",
+                footerDesc: "Приватний проект для зручного щоденного самоконтролю при діабеті."
+            },
+            en: {
+                openDiary: "Open Diary",
+                mainTitle: "Smart Self-Control Diary",
+                mainSubtitle: "powered by AI",
+                mainDesc: "Full range of services for convenient tracking of glucose, insulin, XE, and easy interaction with your doctor.",
+                mainBtn: "Go to Application ➔",
+                servicesTitle: "List of Services Provided",
+                s1_title: "AI XE Calculation from Photo",
+                s1_desc: "Upload a food photo — the built-in Gemini module will analyze the ingredients, calculate carbs, and log XE into your diary.",
+                s2_title: "Charts and HbA1c Calculation",
+                s2_desc: "Interactive glucose fluctuation charts and automatic calculation of estimated HbA1c over 90 days.",
+                s3_title: "Doctor Link Portal",
+                s3_desc: "Generate a secure personal link for your doctor to remotely view charts and dynamics without logging into your account.",
+                s4_title: "Bread Units Calculator",
+                s4_desc: "Convenient built-in calculator (1 XE = 12g carbs) for precise calculation of any portion by grams and carbs.",
+                s5_title: "mmol/L & mg/dL Support",
+                s5_desc: "Instant one-click switching between glucose measurement units with automatic recalculation of graphs.",
+                s6_title: "PDF Export and Printing",
+                s6_desc: "Generate a print-ready self-control report for any period to save as PDF or print before visiting your doctor.",
+                s7_title: "QR Code Generator",
+                s7_desc: "Quickly generate and download PNG QR codes of your doctor link or profile for fast scanning from mobile.",
+                s8_title: "Food Catalog & Premium",
+                s8_desc: "Expandable food database with XE calculation per 100g, integration with external calorie services.",
+                s9_title: "PWA & Dark Mode",
+                s9_desc: "Install the web app directly to your smartphone home screen (Progressive Web App) with offline support and dark mode.",
+                footerDesc: "Private project for convenient daily diabetes self-management."
+            },
+            ru: {
+                openDiary: "Открыть Дневник",
+                mainTitle: "Умный дневник самоконтроля",
+                mainSubtitle: "с искусственным интеллектом",
+                mainDesc: "Полный спектр услуг для удобного учета сахара, инсулина, ХЕ и легкого взаимодействия с вашим лечащим врачом.",
+                mainBtn: "Перейти к приложению ➔",
+                servicesTitle: "Перечень предоставляемых услуг",
+                s1_title: "ИИ-расчет ХЕ по фото",
+                s1_desc: "Загрузите фото блюда — встроенный модуль на базе Gemini определит состав еды, рассчитает углеводы и автоматически занесет ХЕ в ваш дневник.",
+                s2_title: "Графики и расчет HbA1c",
+                s2_desc: "Наглядный интерактивный график колебаний уровня глюкозы и автоматический расчет прогнозируемого гликированного гемоглобина (HbA1c) за 90 дней.",
+                s3_title: "Врачебный портал (Doctor Link)",
+                s3_desc: "Генерация защищенной персональной ссылки для вашего врача, чтобы он мог удаленно просматривать графики без входа в ваш аккаунт.",
+                s4_title: "Калькулятор Хлебных Единиц",
+                s4_desc: "Удобный встроенный калькулятор (1 ХЕ = 12г углеводов) для точного расчета любой порции еды по граммам и содержанию углеводов.",
+                s5_title: "Поддержка mmol/L и mg/dL",
+                s5_desc: "Мгновенное переключение единиц измерения глюкозы в один клик с автоматическим пересчетом всех сохраненных записей и графиков.",
+                s6_title: "Экспорт и печать в PDF",
+                s6_desc: "Формирование готового отчета самоконтроля за любой период для сохранения в формате PDF или распечатки перед визитом к эндокринологу.",
+                s7_title: "Генератор QR-кодов",
+                s7_desc: "Быстрое создание и скачивание PNG QR-кода вашей врачебной ссылки или профиля для быстрого сканирования со смартфона.",
+                s8_title: "Каталог продуктов и Премиум",
+                s8_desc: "Пополняемая база данных продуктов с подсчетом ХЕ на 100 грамм, интеграция с внешними сервисами калорийности.",
+                s9_title: "PWA и Тёмная тема",
+                s9_desc: "Возможность установки веб-приложения на главный экран смартфона (Progressive Web App), работа офлайн и поддержка тёмной темы.",
+                footerDesc: "Частный проект для удобного дневного самоконтроля при диабете."
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'ua';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+
+            ['ua', 'en', 'ru'].forEach(l => {
+                const btn = document.getElementById(`lang-${l}`);
+                if (l === lang) {
+                    btn.className = "px-2.5 py-1 rounded-lg transition bg-emerald-700 text-white";
+                } else {
+                    btn.className = "px-2.5 py-1 rounded-lg transition text-slate-600 dark:text-slate-300 hover:text-emerald-500";
+                }
+            });
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        function setTheme(theme) {
+            const root = document.getElementById('htmlRoot');
+            const body = document.body;
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (theme === 'dark') {
+                root.classList.add('dark');
+                body.className = "bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between";
+                themeIcon.textContent = '☀️';
+            } else {
+                root.classList.remove('dark');
+                body.className = "bg-slate-100 text-slate-900 min-h-screen flex flex-col justify-between";
+                themeIcon.textContent = '🌙';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        }
+
+        let currentSlide = 0;
+        const totalCards = 9;
+
+        function getCardsPerPage() {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        }
+
+        function getMaxSlides() {
+            return totalCards - getCardsPerPage();
+        }
+
+        function updateSlider() {
+            const slider = document.getElementById('slider');
+            const cardsPerPage = getCardsPerPage();
+            const maxSlides = getMaxSlides();
+            
+            if (currentSlide > maxSlides) currentSlide = maxSlides;
+            if (currentSlide < 0) currentSlide = 0;
+
+            const cardWidthPercent = 100 / cardsPerPage;
+            slider.style.transform = `translateX(-${currentSlide * cardWidthPercent}%)`;
+
+            const dotsContainer = document.getElementById('sliderDots');
+            dotsContainer.innerHTML = '';
+            const totalDots = maxSlides + 1;
+
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all ${i === currentSlide ? 'bg-emerald-600 w-6' : 'bg-slate-400 dark:bg-slate-600'}`;
+                dot.onclick = () => { currentSlide = i; updateSlider(); };
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < getMaxSlides()) {
+                currentSlide++;
+            } else {
+                currentSlide = 0;
+            }
+            updateSlider();
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+            } else {
+                currentSlide = getMaxSlides();
+            }
+            updateSlider();
+        }
+
+        window.addEventListener('resize', updateSlider);
+
+        (function init() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            setTheme(savedTheme);
+            setLanguage(currentLang);
+            updateSlider();
+        })();
+    </script>
+
+</body>
+</html>

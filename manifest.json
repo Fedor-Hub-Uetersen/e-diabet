@@ -1,0 +1,27 @@
+{
+  "background_color": "#0f172a",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Diabetes Diary Presentation",
+  "orientation": "any",
+  "scope": "/e-diabet/",
+  "short_name": "DiaDiary",
+  "start_url": "/e-diabet/",
+  "theme_color": "#047857",
+  "icons": [
+    {
+      "src": "ic_launcher.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "ic_launcher.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "description": "Розумний щоденник самоконтролю з штучним інтелектом",
+  "id": "/e-diabet/"
+}
